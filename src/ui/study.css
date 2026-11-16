@@ -1,0 +1,216 @@
+/* 小羊学习屋 —— 融合学习面板样式（跟随牧场手账视觉体系） */
+.study {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  --paper: #fffcf0;
+  --ink: #3f4c36;
+  --muted: #69765c;
+  --line: #e5e8d8;
+}
+
+.study-subjects {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.study-subject {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 12px 8px;
+  border: 1.5px solid var(--line);
+  border-radius: 16px;
+  background: #fffdf6;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.study-subject:hover {
+  transform: translateY(-2px);
+}
+.study-subject.is-active {
+  border-color: var(--accent);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.study-subject > span {
+  font-size: 26px;
+  line-height: 1;
+}
+.study-subject > strong {
+  font-size: 15px;
+  letter-spacing: 0.02em;
+}
+.study-subject > small {
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.4;
+}
+
+.study-stage {
+  --accent: #e8a14f;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 18px;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 0 0, color-mix(in srgb, var(--accent) 16%, transparent), transparent 55%),
+    #fffdf4;
+  border: 1px solid var(--line);
+  min-height: 280px;
+  justify-content: center;
+}
+.study-flourish {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+.study-score {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.study-prompt {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+.study-prompt h3 {
+  margin: 0;
+  font-size: clamp(17px, 2.4vw, 22px);
+  line-height: 1.5;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+}
+.study-speaker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  margin-top: 2px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 18%, white);
+  color: var(--accent);
+  cursor: pointer;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+}
+.study-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+.study-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 10px;
+  border-radius: 14px;
+  border: 1.5px solid var(--line);
+  background: #ffffff;
+  color: var(--ink);
+  font-size: clamp(18px, 3vw, 24px);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+  min-height: 58px;
+}
+.study-option:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+.study-option.is-correct {
+  border-color: #6fae4f;
+  background: #eef7e6;
+  color: #3f7a2a;
+}
+.study-option.is-wrong {
+  border-color: #d98a7a;
+  background: #fdf0ec;
+  color: #b05a44;
+}
+.study-option.is-dim {
+  opacity: 0.45;
+}
+.study-hint {
+  margin: 0;
+  color: #b05a44;
+  font-size: 13.5px;
+}
+.study-next {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+.study-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.12s ease;
+}
+.study-button:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+.study-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+.study-done-emoji {
+  font-size: 44px;
+}
+.study-done h3 {
+  margin: 0;
+  font-size: 22px;
+  color: var(--ink);
+}
+.study-done p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+.study-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 12.5px;
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  .study-options {
+    grid-template-columns: 1fr;
+  }
+  .study-subjects {
+    gap: 6px;
+  }
+  .study-subject > small {
+    display: none;
+  }
+}
