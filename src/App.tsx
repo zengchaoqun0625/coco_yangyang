@@ -21,7 +21,9 @@ import {
   Leaf,
   LoaderCircle,
   MapPin,
+  Maximize,
   MessageCircle,
+  Minimize,
   Moon,
   PackageOpen,
   Scissors,
@@ -175,6 +177,25 @@ export default function App() {
       position: Vec2;
     }>(),
     [hudPosition, setHudPosition] = useState<Vec2>({ x: 0, z: 6 });
+  const [isFullscreen, setIsFullscreen] = useState(
+    () =>
+      typeof document !== "undefined" &&
+      Boolean(document.fullscreenElement),
+  );
+  const toggleFullscreen = useCallback(() => {
+    if (typeof document === "undefined") return;
+    if (document.fullscreenElement) {
+      void document.exitFullscreen().catch(() => {});
+    } else {
+      void document.documentElement.requestFullscreen().catch(() => {});
+    }
+  }, []);
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const onChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
+    document.addEventListener("fullscreenchange", onChange);
+    return () => document.removeEventListener("fullscreenchange", onChange);
+  }, []);
   const [chatOpen, setChatOpen] = useState(false),
     [chatText, setChatText] = useState(""),
     [chatCooldownUntil, setChatCooldownUntil] = useState(0),
@@ -1175,6 +1196,13 @@ export default function App() {
             <Users size={19} />
             <span>{Math.max(1, players.length)}</span>
             <i />
+          </button>
+          <button
+            className="round-button fullscreen-button"
+            aria-label={isFullscreen ? "退出全屏" : "全屏沉浸"}
+            onClick={toggleFullscreen}
+          >
+            {isFullscreen ? <Minimize size={19} /> : <Maximize size={19} />}
           </button>
           <button
             className="round-button"

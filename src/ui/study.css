@@ -2,11 +2,251 @@
 .study {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 14px;
   --paper: #fffcf0;
   --ink: #3f4c36;
   --muted: #69765c;
   --line: #e5e8d8;
+}
+
+/* 闯关 / 听一听 模式切换 */
+.study-modes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  background: #f2f3e6;
+  border-radius: 16px;
+  padding: 5px;
+}
+.study-mode {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px 8px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+.study-mode small {
+  font-size: 11px;
+  font-weight: 400;
+  color: inherit;
+  opacity: 0.75;
+}
+.study-mode.is-active {
+  background: #fffdf6;
+  border-color: #e7e9d9;
+  color: var(--ink);
+  box-shadow: 0 2px 8px rgba(60, 80, 40, 0.08);
+}
+
+/* 听一听：被动跟读 */
+.listen {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  --accent: #e8a14f;
+}
+.listen-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+.listen-mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.listen-count {
+  font-variant-numeric: tabular-nums;
+}
+.listen-count small {
+  opacity: 0.7;
+}
+.listen-ready-note {
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #fdf3e2;
+  border: 1px solid #f0dfc0;
+  color: #9a7a45;
+  font-size: 13px;
+  line-height: 1.7;
+}
+.listen-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: #fffdf4;
+  padding: 26px 18px;
+  min-height: 250px;
+  overflow: hidden;
+}
+
+/* 数字数数 */
+.listen-number {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  text-align: center;
+}
+.listen-number-sheep {
+  font-size: clamp(20px, 4vw, 30px);
+  line-height: 1.5;
+  letter-spacing: 0.12em;
+  word-break: break-all;
+  max-width: 100%;
+}
+.listen-number-big,
+.listen-letter-big {
+  font-size: clamp(52px, 9vw, 88px);
+  font-weight: 800;
+  line-height: 1;
+  color: #d98a3f;
+  text-shadow: 0 3px 0 rgba(217, 138, 63, 0.18);
+}
+
+/* 字母 */
+.listen-letter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: center;
+}
+.listen-letter-big {
+  color: #5d8fc9;
+  text-shadow: 0 3px 0 rgba(93, 143, 201, 0.18);
+}
+.listen-letter-word {
+  font-size: clamp(20px, 4vw, 30px);
+  color: var(--ink);
+  letter-spacing: 0.04em;
+}
+
+/* 唐诗 */
+.listen-poem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: center;
+}
+.listen-poem-title {
+  font-size: clamp(17px, 3vw, 21px);
+  font-weight: 700;
+  color: #8c63ac;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.listen-poem-title small {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--muted);
+}
+.listen-poem p {
+  margin: 0;
+  position: relative;
+  font-size: clamp(20px, 4vw, 26px);
+  letter-spacing: 0.06em;
+  line-height: 1.7;
+  color: #8b8f7c;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 2px 12px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.listen-poem p.is-current {
+  color: var(--ink);
+  font-weight: 700;
+  background: #f6eefb;
+}
+.listen-speaker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  margin-left: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #e8daf5;
+  color: #8c63ac;
+}
+.listen-repeat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1.5px solid #e3e6d2;
+  background: #fff;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #8a6f3f;
+}
+.listen-repeat:hover {
+  border-color: var(--accent);
+}
+
+/* 控制条 */
+.listen-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+.listen-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1.5px solid var(--line);
+  background: #fffdf6;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 12px;
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+.listen-control:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.listen-control:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  color: var(--ink);
+}
+.listen-control small {
+  font-size: 11.5px;
+}
+.listen-primary {
+  background: #fdf1dc;
+  border-color: #f0d9ae;
+  color: #b57f2e;
+}
+.listen-primary:hover:not(:disabled) {
+  border-color: #e2b96e;
+  color: #9a6a1f;
 }
 
 .study-subjects {

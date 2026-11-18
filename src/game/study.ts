@@ -239,6 +239,13 @@ function pickVoice(): SpeechSynthesisVoice | null {
     null
   );
 }
+export function speechSupported() {
+  return typeof speechSynthesis !== "undefined" && typeof SpeechSynthesisUtterance !== "undefined";
+}
+export function stopSpeaking() {
+  if (typeof speechSynthesis === "undefined") return;
+  speechSynthesis.cancel();
+}
 export function speak(text: string, lang = "zh-CN") {
   if (typeof speechSynthesis === "undefined") return;
   speechSynthesis.cancel();
@@ -260,6 +267,55 @@ if (typeof speechSynthesis !== "undefined" && typeof window !== "undefined") {
     voicesReady = true;
   });
 }
+
+// ---- 听一听：被动朗读内容 ----
+// 数字从头数到 10（大字 + 羊泡泡），适合刚学数数的小朋友
+export const listenNumbers: { value: number; sheep: number; word: string }[] = (() => {
+  const sheepCounts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  return sheepCounts.map((n, i) => ({
+    value: n,
+    sheep: n,
+    word: NUMBER_WORDS[i],
+  }));
+})();
+
+// 字母 26 个：读音 + 一个小朋友熟悉的示例词
+export const listenLetters: { letter: string; word: string }[] = [
+  { letter: "A", word: "Apple" },
+  { letter: "B", word: "Ball" },
+  { letter: "C", word: "Cat" },
+  { letter: "D", word: "Dog" },
+  { letter: "E", word: "Egg" },
+  { letter: "F", word: "Fish" },
+  { letter: "G", word: "Goat" },
+  { letter: "H", word: "Hat" },
+  { letter: "I", word: "Ice cream" },
+  { letter: "J", word: "Juice" },
+  { letter: "K", word: "Kite" },
+  { letter: "L", word: "Lamb" },
+  { letter: "M", word: "Moon" },
+  { letter: "N", word: "Nest" },
+  { letter: "O", word: "Orange" },
+  { letter: "P", word: "Pig" },
+  { letter: "Q", word: "Queen" },
+  { letter: "R", word: "Rabbit" },
+  { letter: "S", word: "Sheep" },
+  { letter: "T", word: "Tiger" },
+  { letter: "U", word: "Umbrella" },
+  { letter: "V", word: "Violin" },
+  { letter: "W", word: "Water" },
+  { letter: "X", word: "Box" },
+  { letter: "Y", word: "Yarn" },
+  { letter: "Z", word: "Zebra" },
+];
+
+// 唐诗整首朗读：四句起止 + 全部逐句内容，用于听一听模式
+export const listenPoems: { title: string; author: string; lines: string[] }[] =
+  poems.map((p) => ({
+    title: p.title,
+    author: p.author,
+    lines: p.lines.map((line) => line.replaceAll("□", "○○")),
+  }));
 
 // ---- study session state ----
 export function buildSession(subject: StudySubject, seed = Math.random()): StudyQuestion[] {

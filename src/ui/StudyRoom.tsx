@@ -1,15 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { BookOpen, Check, Coins, RefreshCw, Sparkles, Volume2, X } from "lucide-react";
+import { BookOpen, Check, Coins, Headphones, RefreshCw, Sparkles, Volume2, X } from "lucide-react";
 import type { FarmState, GameAction } from "../game/types";
 import {
   buildSession,
   celebrate,
   primeVoices,
   speak,
+  stopSpeaking,
   subjectInfo,
   type StudyQuestion,
   type StudySubject,
 } from "../game/study";
+import ListenRoom from "./ListenRoom";
 import "./study.css";
 
 interface StudyRoomProps {
@@ -22,6 +24,7 @@ const SESSION_SIZE = 5;
 
 export default function StudyRoom({ state, serverNow, onStudy }: StudyRoomProps) {
   const [subject, setSubject] = useState<StudySubject>("numbers");
+  const [mode, setMode] = useState<"quiz" | "listen">("listen");
   const [seed, setSeed] = useState(() => Math.random());
   const questions = useMemo(() => buildSession(subject, seed), [subject, seed]);
   const [index, setIndex] = useState(0);
@@ -43,7 +46,13 @@ export default function StudyRoom({ state, serverNow, onStudy }: StudyRoomProps)
     setCorrectCount(0);
     setFinished(false);
     setHint("");
+    stopSpeaking();
   }, [subject, seed]);
+
+  useEffect(() => {
+    // 切到答题模式时停掉听一听的语音，避免两只喇叭同时响
+    if (mode === "quiz") stopSpeaking();
+  }, [mode]);
 
   const speakQuestion = useCallback(() => {
     if (!question) return;
@@ -97,6 +106,29 @@ export default function StudyRoom({ state, serverNow, onStudy }: StudyRoomProps)
   const info = subjectInfo[subject];
   return (
     <div className="study">
+      <div className="study-modes" role="tablist" aria-label="学习方式">
+        <button
+          role="tab"
+          aria-selected={mode === "listen"}
+          className={`study-mode ${mode === "listen" ? "is-active" : ""}`}
+          onClick={() => setMode("listen")}
+        >
+          <Headphones size={16} />
+          听一听
+          <small>磨耳朵 · 跟读</small>
+        </button>
+        <button
+          role="tab"
+          aria-selected={mode === "quiz"}
+          className={`study-mode ${mode === "quiz" ? "is-active" : ""}`}
+          onClick={() => setMode("quiz")}
+        >
+          <Sparkles size={16} />
+          闯关答题
+          <small>答对有金币</small>
+        </button>
+      </div>
+
       <div className="study-subjects" role="tablist" aria-label="学习内容">
         {(Object.keys(subjectInfo) as StudySubject[]).map((s) => (
           <button
@@ -114,6 +146,10 @@ export default function StudyRoom({ state, serverNow, onStudy }: StudyRoomProps)
         ))}
       </div>
 
+      {mode === "listen" ? (
+        <ListenRoom subject={subject} key={subject} />
+      ) : (
+        <>
       <div className="study-stage" style={{ "--accent": info.color } as React.CSSProperties}>
         {finished ? (
           <div className="study-done">
@@ -186,6 +222,8 @@ export default function StudyRoom({ state, serverNow, onStudy }: StudyRoomProps)
         </span>
         <BookOpen size={14} />
       </div>
+      </>
+      )}
     </div>
   );
 }

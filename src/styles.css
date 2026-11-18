@@ -23,9 +23,23 @@
 * {
   box-sizing: border-box;
 }
+html {
+  height: 100%;
+  overscroll-behavior: none;
+}
 body {
   margin: 0;
   overflow: hidden;
+  width: 100%;
+  height: 100%;
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+body input,
+body textarea {
+  user-select: text;
+  -webkit-user-select: text;
 }
 button,
 input,
@@ -468,6 +482,7 @@ kbd {
   padding-bottom: 6px;
 }
 .game {
+  height: 100vh;
   height: 100dvh;
   width: 100%;
   position: relative;
@@ -497,6 +512,9 @@ kbd {
   justify-content: space-between;
   align-items: flex-start;
   pointer-events: none;
+  padding-top: env(safe-area-inset-top);
+  padding-left: calc(env(safe-area-inset-left) / 2);
+  padding-right: calc(env(safe-area-inset-right) / 2);
 }
 .hud-top > * {
   pointer-events: auto;
@@ -654,6 +672,7 @@ kbd {
   top: 151px;
   left: 29px;
   width: 259px;
+  padding-left: env(safe-area-inset-left);
 }
 .objective {
   display: block;
@@ -777,6 +796,7 @@ kbd {
   flex-direction: column;
   gap: 10px;
   align-items: flex-end;
+  padding-right: env(safe-area-inset-right);
 }
 .journal-button,
 .market-button {
@@ -821,6 +841,7 @@ kbd {
   align-items: center;
   flex-direction: column;
   z-index: 5;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 .toolbelt {
   display: flex;
@@ -963,6 +984,8 @@ kbd {
   display: flex;
   flex-direction: column;
   gap: 13px;
+  padding-left: env(safe-area-inset-left);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 .level-badge {
   display: flex;
@@ -1042,6 +1065,8 @@ kbd {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 .minimap {
   width: 126px;
@@ -1565,6 +1590,13 @@ kbd {
     right: 13px;
     top: 74px;
     gap: 7px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    max-width: 85vw;
+  }
+  .right-hud .journal-button small {
+    display: none;
   }
   .journal-button,
   .market-button {
@@ -1746,6 +1778,7 @@ kbd {
     align-items: center;
     justify-content: space-between;
     pointer-events: none;
+    padding-bottom: env(safe-area-inset-bottom);
   }
   .joystick {
     width: 100px;
@@ -1830,6 +1863,9 @@ kbd {
   }
   .top-right .round-button {
     display: none;
+  }
+  .top-right .fullscreen-button {
+    display: inline-flex;
   }
   .money-pill {
     gap: 4px;
